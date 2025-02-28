@@ -16,29 +16,21 @@ class Ui_MainWindow(QMainWindow):
     def setupUi(self):
         self.setObjectName("Storage Manager")
         self.resize(1030, 600)
-        self.setFixedSize(1030, 600)  # Фиксируем размер окна
-
+        self.setFixedSize(1030, 600)
         self.centralwidget = QWidget(self)
         self.setCentralWidget(self.centralwidget)
-
         layout = QHBoxLayout(self.centralwidget)
-
-        # Левый сайдбар со скроллом
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
         self.scroll_content = QWidget()
         self.scroll_layout = QVBoxLayout(self.scroll_content)
         self.scroll_layout.setAlignment(Qt.AlignTop)
         self.scroll_area.setWidget(self.scroll_content)
-        self.scroll_area.setFixedWidth(200)  # Фиксируем ширину сайдбара
+        self.scroll_area.setFixedWidth(200)
         layout.addWidget(self.scroll_area, 1)
-
-        # Основное пространство (можно добавлять контент позже)
         self.main_area = QWidget()
         self.main_area_layout = QVBoxLayout(self.main_area)
         self.main_area_layout.setAlignment(Qt.AlignTop)
-
-        # Кнопки "+" и "-"
         self.buttons_widget = QWidget()
         self.buttons_layout = QHBoxLayout(self.buttons_widget)
         self.add_button = QPushButton("+")
@@ -48,8 +40,6 @@ class Ui_MainWindow(QMainWindow):
         self.buttons_layout.addWidget(self.add_button)
         self.buttons_layout.addWidget(self.remove_button)
         self.main_area_layout.addWidget(self.buttons_widget)
-
-        # Область для отображения предметов
         self.items_area = QScrollArea()
         self.items_area.setWidgetResizable(True)
         self.items_content = QWidget()
@@ -59,11 +49,8 @@ class Ui_MainWindow(QMainWindow):
         self.items_layout.setVerticalSpacing(10)
         self.items_area.setWidget(self.items_content)
         self.main_area_layout.addWidget(self.items_area)
-
         layout.addWidget(self.main_area, 3)
-
         self.menubar = self.menuBar()
-
         self.menu_create = self.menubar.addMenu("Создать")
         self.action_create_shelf = QAction("Создать полку", self)
         self.action_create_shelf.triggered.connect(self.create_shelf)
@@ -80,7 +67,6 @@ class Ui_MainWindow(QMainWindow):
         self.menu_help.addAction(self.action_feedback)
         self.menu_help.addAction(self.action_about)
 
-        # Обновляем интерфейс при запуске
         self.update_shelves()
 
     def add_shelf_button(self, name):
@@ -116,7 +102,7 @@ class Ui_MainWindow(QMainWindow):
             if item in self.items:
                 del self.items[item]
             self.update_shelves()
-            self.save_data()  # Сохраняем данные после изменения
+            self.save_data()
 
     def update_shelves(self):
         for i in reversed(range(self.scroll_layout.count())):
@@ -193,7 +179,7 @@ class Ui_MainWindow(QMainWindow):
             return
         item['quantity'] = str(new_quantity)
         self.update_items()
-        self.save_data()  # Сохраняем данные после изменения
+        self.save_data()
 
     def add_item(self):
         if not self.current_shelf:
@@ -210,7 +196,7 @@ class Ui_MainWindow(QMainWindow):
 
         quantity_edit = QLineEdit()
         quantity_edit.setPlaceholderText("Количество")
-        quantity_edit.setValidator(QIntValidator(0, 999999, self))  # Только цифры
+        quantity_edit.setValidator(QIntValidator(0, 999999, self))
         layout.addWidget(quantity_edit)
 
         image_button = QPushButton("Загрузить картинку")
@@ -247,7 +233,7 @@ class Ui_MainWindow(QMainWindow):
                 'image': saved_image_path
             })
             self.update_items()
-            self.save_data()  # Сохраняем данные после изменения
+            self.save_data()
 
     def edit_item(self, item):
         dialog = QDialog(self)
@@ -285,11 +271,9 @@ class Ui_MainWindow(QMainWindow):
                 QMessageBox.warning(self, "Ошибка", "Предмет с таким названием уже существует на этой полке!", QMessageBox.Ok)
                 return
 
-            # Удаляем старое изображение, если оно было
             if item['image'] and item['image'] != image_path:
                 delete_image(item['image'])
 
-            # Сохраняем новое изображение
             try:
                 saved_image_path = save_image(image_path)
             except SameFileError:
@@ -301,7 +285,7 @@ class Ui_MainWindow(QMainWindow):
             except UnboundLocalError:
                 pass
             self.update_items()
-            self.save_data()  # Сохраняем данные после изменения
+            self.save_data()
 
     def remove_item(self):
         if not self.current_shelf or self.current_shelf not in self.items or not self.items[self.current_shelf]:
@@ -314,10 +298,10 @@ class Ui_MainWindow(QMainWindow):
         if ok and item_name:
             item_to_remove = next(item for item in items if item['name'] == item_name)
             if item_to_remove['image']:
-                delete_image(item_to_remove['image'])  # Удаляем изображение
+                delete_image(item_to_remove['image'])
             items.remove(item_to_remove)
             self.update_items()
-            self.save_data()  # Сохраняем данные после изменения
+            self.save_data()
 
     def save_data(self):
         """Сохраняет данные в файл."""
