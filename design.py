@@ -103,7 +103,7 @@ class Ui_MainWindow(QMainWindow):
             self.shelves.append(name)
             self.shelves.sort()
             self.update_shelves()
-            self.save_data()  # Сохраняем данные после изменения
+            self.save_data()
 
     def delete_shelf(self):
         if not self.shelves:
