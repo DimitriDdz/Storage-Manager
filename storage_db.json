@@ -1,0 +1,32 @@
+{
+    "shelves": [
+        "Полка 1",
+        "Полка 2"
+    ],
+    "items": {
+        "Полка 1": [
+            {
+                "name": "Процессор i5-14400f",
+                "quantity": "3",
+                "image": "images\\image-264.png"
+            }
+        ],
+        "Полка 2": [
+            {
+                "name": "intel core i5-10400f",
+                "quantity": "0",
+                "image": "images\\protsessor_intel_core_i5_10400f_lga1200_oem_1599757558_3.jpg"
+            },
+            {
+                "name": "amd ryzen 5 5600x",
+                "quantity": "11",
+                "image": "images\\6996218505.jpg"
+            },
+            {
+                "name": "amd ryzen 7 5800",
+                "quantity": "6",
+                "image": "images\\2q6va3nsl8mpg9q7ym96z0cx0a1bt158.jpg"
+            }
+        ]
+    }
+}
