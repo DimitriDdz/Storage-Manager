@@ -8,7 +8,6 @@ from database import *
 import pandas as pd
 import openpyxl
 
-
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
